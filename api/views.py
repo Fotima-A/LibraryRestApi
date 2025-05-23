@@ -81,8 +81,8 @@ class RegisterView(APIView):
 class BookListCreateView(APIView):
     def get_permissions(self):
         if self.request.method == 'GET':
-            return [permissions.IsAuthenticated()]  # Barcha autentifikatsiyalangan foydalanuvchilar ko‘ra oladi
-        return [RoleBasedPermission(allowed_roles=[UserRole.ADMIN, UserRole.OPERATOR])]  # Faqat admin va operator qo‘sha oladi
+            return [permissions.IsAuthenticated()]  
+        return [RoleBasedPermission(allowed_roles=[UserRole.ADMIN, UserRole.OPERATOR])]  
 
     @swagger_auto_schema(
         operation_description="Get list of books (accessible to all authenticated users)",
@@ -116,7 +116,7 @@ class BookListCreateView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class BookUpdateDeleteView(APIView):
-    permission_classes = [RoleBasedPermission(allowed_roles=[UserRole.ADMIN, UserRole.OPERATOR])]  # Faqat admin va operator o‘zgartirishi/o‘chirishi mumkin
+    permission_classes = [RoleBasedPermission(allowed_roles=[UserRole.ADMIN, UserRole.OPERATOR])]  
 
     @swagger_auto_schema(
         operation_description="Update a book (Admin and Operator only)",
@@ -159,7 +159,7 @@ class BookUpdateDeleteView(APIView):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 class OrderCreateView(APIView):
-    permission_classes = [RoleBasedPermission(allowed_roles=[UserRole.USER])]  # Faqat user band qilishi mumkin
+    permission_classes = [RoleBasedPermission(allowed_roles=[UserRole.USER])]  
 
     @swagger_auto_schema(
         operation_description="Reserve a book (User only, auto-cancels after 1 day if not picked up)",
@@ -189,7 +189,7 @@ class OrderCreateView(APIView):
         return Response(OrderSerializer(order).data, status=status.HTTP_201_CREATED)
 
 class OrderListView(APIView):
-    permission_classes = [RoleBasedPermission(allowed_roles=[UserRole.ADMIN, UserRole.OPERATOR])]  # Faqat admin va operator ko‘ra oladi
+    permission_classes = [RoleBasedPermission(allowed_roles=[UserRole.ADMIN, UserRole.OPERATOR])]  
 
     @swagger_auto_schema(
         operation_description="View all orders with details (Admin and Operator only)",
@@ -202,7 +202,7 @@ class OrderListView(APIView):
         return Response(serializer.data)
 
 class OrderAcceptView(APIView):
-    permission_classes = [RoleBasedPermission(allowed_roles=[UserRole.ADMIN, UserRole.OPERATOR])]  # Faqat admin va operator qabul qilishi mumkin
+    permission_classes = [RoleBasedPermission(allowed_roles=[UserRole.ADMIN, UserRole.OPERATOR])]  
 
     @swagger_auto_schema(
         operation_description="Accept an order (Admin and Operator only)",
@@ -223,7 +223,7 @@ class OrderAcceptView(APIView):
         return Response(OrderSerializer(order).data)
 
 class OrderReturnView(APIView):
-    permission_classes = [RoleBasedPermission(allowed_roles=[UserRole.ADMIN, UserRole.OPERATOR])]  # Faqat admin va operator qaytarishi mumkin
+    permission_classes = [RoleBasedPermission(allowed_roles=[UserRole.ADMIN, UserRole.OPERATOR])]  
 
     @swagger_auto_schema(
         operation_description="Return an order (Admin and Operator only)",
@@ -249,7 +249,7 @@ class OrderReturnView(APIView):
         return Response(OrderSerializer(order).data)
 
 class OrderRateView(APIView):
-    permission_classes = [RoleBasedPermission(allowed_roles=[UserRole.USER])]  # Faqat user baho bera oladi
+    permission_classes = [RoleBasedPermission(allowed_roles=[UserRole.USER])]  
 
     @swagger_auto_schema(
         operation_description="Rate a book after reading (User only, 0-5 stars)",
