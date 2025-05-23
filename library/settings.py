@@ -73,7 +73,7 @@ REST_FRAMEWORK = {
 
     ),
     'DEFAULT_PERMISSION_CLASSES': (
-        'rest_framework.permissions.AllowAny',  # Global ruxsatni o‘zgartirdik
+        'rest_framework.permissions.AllowAny',  
     ),
 }
 
