@@ -1,0 +1,8 @@
+django==4.2.16
+djangorestframework==3.15.2
+djangorestframework-simplejwt==5.3.1
+passlib==1.7.4
+bcrypt==4.2.0
+celery==5.4.0
+redis==5.0.8
+drf-yasg==1.21.7
