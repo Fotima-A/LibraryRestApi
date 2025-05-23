@@ -29,9 +29,9 @@ class UserCreateSerializer(serializers.ModelSerializer):
             username=validated_data['username'],
             role=validated_data['role']
         )
-        user.set_password(validated_data['password'])  # Parolni to‘g‘ri hash qilish
+        user.set_password(validated_data['password'])  
         user.save()
-        print(f"User created: {user.username}, hashed password: {user.password}")  # Debugging uchun
+        print(f"User created: {user.username}, hashed password: {user.password}")  
         return user
 
 class BookSerializer(serializers.ModelSerializer):
@@ -40,14 +40,13 @@ class BookSerializer(serializers.ModelSerializer):
         fields = ['id', 'title', 'author', 'quantity']
 
 class OrderCreateSerializer(serializers.ModelSerializer):
-    book_id = serializers.IntegerField(write_only=True)  # Faqat yozish uchun
+    book_id = serializers.IntegerField(write_only=True)  
 
     class Meta:
         model = Order
-        fields = ['book_id']  # Faqat book_id ni qabul qilamiz
+        fields = ['book_id']  
 
     def validate_book_id(self, value):
-        # Kitob mavjudligini tekshirish
         if not Book.objects.filter(id=value).exists():
             raise serializers.ValidationError("Book does not exist")
         return value
@@ -55,7 +54,6 @@ class OrderCreateSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         book_id = validated_data.pop('book_id')
         book = Book.objects.get(id=book_id)
-        # Foydalanuvchi avtomatik qo‘shiladi
         user = self.context['request'].user
         order = Order.objects.create(
             user=user,
